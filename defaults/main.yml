@@ -1,0 +1,5 @@
+---
+unison_target_name: project
+unison_mount_directory: /vagrant/
+unison_local_config_directory: ~/.unison/
+unison_package_version: 2.48.3-1~eugenesan~trusty1

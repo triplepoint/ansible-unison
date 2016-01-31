@@ -1,0 +1,10 @@
+root = .
+root = ssh://{{ inventory_hostname }}/{{ unison_mount_directory }}
+ignore = Name {.git,.vagrant}
+
+prefer = .
+repeat = 2
+terse = true
+dontchmod = true
+perms = 0
+sshargs = -F {{ unison_local_config_directory | expanduser }}{{ unison_target_name }}_ssh.conf

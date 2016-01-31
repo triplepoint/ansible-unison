@@ -1,0 +1,22 @@
+---
+- name: Ensure the Unison PPA is available
+  apt_repository: repo='ppa:eugenesan/ppa'
+
+- name: Ensure the proper version of unison is installed
+  apt: name=unison={{ unison_package_version }}
+
+- name: Ensure the sync target directory exists on the remote instance
+  become: no
+  file: path={{ unison_mount_directory }} state=directory
+
+- name: Ensure the unison config directory exists on the localhost
+  become: no
+  local_action: file path={{ unison_local_config_directory }} state=directory
+
+- name: Dump the Vagrant ssh configuration file for this host
+  become: no
+  local_action: shell vagrant ssh-config > {{ unison_local_config_directory }}{{ unison_target_name }}_ssh.conf
+
+- name: Ensure the Unison config file is present on the local host
+  become: no
+  local_action: template src=unison_profile.prf.j2 dest={{ unison_local_config_directory }}{{ unison_target_name }}.prf
