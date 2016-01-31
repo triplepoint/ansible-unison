@@ -1,22 +1,28 @@
 ---
 - name: Ensure the Unison PPA is available
-  apt_repository: repo='ppa:eugenesan/ppa'
+  apt_repository: repo='{{ unison_package_repository }}'
 
 - name: Ensure the proper version of unison is installed
   apt: name=unison={{ unison_package_version }}
 
 - name: Ensure the sync target directory exists on the remote instance
   sudo: no
-  file: path={{ unison_mount_directory }} state=directory
+  file: path={{ unison_remote_mount_directory }} state=directory
 
 - name: Ensure the unison config directory exists on the localhost
   sudo: no
   local_action: file path={{ unison_local_config_directory }} state=directory
 
-- name: Dump the Vagrant ssh configuration file for this host
+- name: Get the SSH config file content from Vagrant
   sudo: no
-  local_action: shell vagrant ssh-config > {{ unison_local_config_directory }}{{ unison_target_name }}_ssh.conf
+  local_action: command vagrant ssh-config
+  register: unison_vagrant_ssh_config
+  changed_when: false
+
+- name: Ensure the Unison SSH configuration file for this host is present
+  sudo: no
+  local_action: copy content="{{ unison_vagrant_ssh_config.stdout }}" dest={{ (unison_local_config_directory + '/' + unison_project_name + '_ssh.conf')  | expanduser | realpath }} backup=yes
 
 - name: Ensure the Unison config file is present on the local host
   sudo: no
-  local_action: template src=unison_profile.prf.j2 dest={{ unison_local_config_directory }}{{ unison_target_name }}.prf
+  local_action: template src=unison_profile.prf.j2 dest={{ (unison_local_config_directory + '/' + unison_project_name + '.prf')  | expanduser | realpath }} backup=yes

@@ -1,23 +1,56 @@
 # Unison
-Install and configure Unison file syncronization between the ansible host and the deploy target.
+## Introduction
+Install and configure a Unison file synchronization between the Ansible host and the deploy target.
 
-Applying this role to a host also creates some configuration files locally with which to configure Unison.  Specifically, the specified `unison_local_config_directory` is created (if necessary), and a Unison preferences file and an SSH config file for this host are generated in this directory.
+## Details
+Applying this role to a host also creates some configuration files locally with which to configure Unison.  Specifically, the directory specified by the `unison_local_config_directory` variable is created (if necessary), and a Unison preferences file and an SSH config file for this host are generated in that directory.
 
-While applying this role configures the local and remote hosts for a Unison sync, to initiate the sync you have to invoke Unison from the local host:
+## Installing Unison
+In order for Unison to perform on the local host, Unison must be installed there.  While full instructions are outside the scope of this document, for Apple OSX users with [Homebrew](http://brew.sh/) installed, Unison is available there:
 ``` bash
-unison <whatever you set `unison_target_name`>
+brew install unison
+```
+
+### Unison Versions
+It's said that if you don't have the same version of Unison on both ends of the synch, then _Bad Things_ can happen.  The Ansible variables `unison_package_repository` and `unison_package_version` define where to find Unison for the remote host, and care should be taken to make sure these match the version installed on the local host.  The installed version of Unison can be checked with:
+``` bash
+unison -version
+```
+
+## Starting and Stopping Unison
+Applying this role configures the local and remote hosts for a Unison sync, but to initiate and maintain the sync you have to invoke Unison from the local host:
+``` bash
+unison <whatever you set `unison_project_name`>
 ```
 
 This will only keep the two hosts synced as long as this command is left running.
 
+Unison can be halted with `control-c`.
+
+## Dealing with Unison Errors
+In the following scenario:
+- Running VM with Unison running
+- Stop Unison
+- Destroy the VM and recreate it
+- Restart Unison
+
+Unison will error out, complaining about an inconsistent state, a missing archive on the remote host, and a local archive (it looks like a big hash string) that should be deleted.  Take it's advice and delete the local archive:
+``` bash
+rm -r ~/.unison/<whatever the local archive name says>
+```
+
+Once this is resolved, Unison can be started like normal.
+
 # Requirements
-None.
+`Unison` must be installed (see above).
 
 # Role Variables
-- unison_target_name: project # The target name which Unison will use as a shorthand for this sync.
-- unison_mount_directory: /vagrant/ # The directory to create and keep synched on the remote host.  Note that it will be modified when unison is executed!
-- unison_local_config_directory: ~/.unison/ # Where on the local host is Unison expecting its configuration files to live? Note that it REQUIRES A TRAILING SLASH.
-- unison_package_version: 2.48.3-1~eugenesan~trusty1 # The deb package version for Unison (this should be synchronzied pretty closely to the ansible host's version)
+- `unison_project_name`: project _# The target name which Unison will use as a shorthand for this sync._
+- `unison_local_mount_directory`: . _# The directory on the localhost with which to sync the remote directory defined by `unison_remote_mount_directory`._
+- `unison_remote_mount_directory`: /vagrant _# The directory to create and keep synched on the remote host.  Note that it will be modified when Unison is executed!_
+- `unison_local_config_directory`: ~/.unison _# Where on the local host is Unison expecting its configuration files to live?_
+- `unison_package_repository`: ppa:eugenesan/ppa _# The package repository with which to install Unison._
+- `unison_package_version`: 2.48.3-1~eugenesan~trusty1 _# The deb package version for Unison (this should be synchronzied pretty closely to the ansible host's version)_
 
 # Dependencies
 None

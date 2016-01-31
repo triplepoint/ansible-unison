@@ -1,10 +1,17 @@
-root = .
-root = ssh://{{ inventory_hostname }}/{{ unison_mount_directory }}
+###
+# This is a reasonable configuration, but for the full set of options, see:
+# http://www.cis.upenn.edu/~bcpierce/unison/download/releases/stable/unison-manual.html#running
+###
+
+root = {{ unison_local_mount_directory | realpath }}
+root = ssh://{{ inventory_hostname }}/{{ unison_remote_mount_directory }}
+prefer = {{ unison_local_mount_directory | realpath }}
+
 ignore = Name {.git,.vagrant}
 
-prefer = .
 repeat = 2
 terse = true
 dontchmod = true
 perms = 0
-sshargs = -F {{ unison_local_config_directory | expanduser }}{{ unison_target_name }}_ssh.conf
+sshargs = -F {{ (unison_local_config_directory + '/' + unison_project_name + '_ssh.conf')  | expanduser | realpath }}
+

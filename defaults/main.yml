@@ -1,5 +1,7 @@
 ---
-unison_target_name: project
-unison_mount_directory: /vagrant/
-unison_local_config_directory: ~/.unison/ # REQUIRES A TRAILING SLASH
+unison_project_name: project
+unison_local_mount_directory: .
+unison_remote_mount_directory: /vagrant
+unison_local_config_directory: ~/.unison
+unison_package_repository: ppa:eugenesan/ppa
 unison_package_version: 2.48.3-1~eugenesan~trusty1
