@@ -2,6 +2,8 @@
 ## Introduction
 Install and configure a Unison file synchronization between the Ansible host and the deploy target.
 
+NOTE: As of right now, this only really works when the remote host is a Vagrant machine, due to the SSH configuration being extracted straight from Vagrant.  It wouldn't be _too_ much work to generalize this to optionally take in manually-written SSH config files, but for now this is it.
+
 ## Details
 Applying this role to a host also creates some configuration files locally with which to configure Unison.  Specifically, the directory specified by the `unison_local_config_directory` variable is created (if necessary), and a Unison preferences file and an SSH config file for this host are generated in that directory.
 
