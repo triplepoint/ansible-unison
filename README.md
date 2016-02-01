@@ -62,7 +62,7 @@ None
         - some-host
       sudo: yes
       roles:
-        - unison
+        - triplepoint.unison
 
 # License
 MIT
