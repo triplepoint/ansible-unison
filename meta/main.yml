@@ -7,6 +7,9 @@ galaxy_info:
   - name: Ubuntu
     versions:
     - all
-  galaxy_tags: []
+  galaxy_tags:
+    - development
+    - vagrant
+    - synchronization
 
 dependencies: []
