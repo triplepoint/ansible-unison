@@ -20,9 +20,9 @@ unison -version
 ```
 
 ## Starting and Stopping Unison
-Applying this role configures the local and remote hosts for a Unison sync, but to initiate and maintain the sync you have to invoke Unison from the local host:
+Applying this role configures the local and remote hosts for a Unison sync, but to initiate and maintain the sync you have to invoke Unison from the local host (substituting your value for `unison_project_name`):
 ``` bash
-unison <whatever you set `unison_project_name`>
+unison unison_project_name
 ```
 
 This will only keep the two hosts synced as long as this command is left running.
@@ -34,11 +34,11 @@ In the following scenario:
 - Running VM with Unison running
 - Stop Unison
 - Destroy the VM and recreate it
-- Restart Unison
+- Restart Unison as described above
 
-Unison will error out, complaining about an inconsistent state, a missing archive on the remote host, and a local archive (it looks like a big hash string) that should be deleted.  Take it's advice and delete the local archive:
+Unison will error out, complaining about an inconsistent state, a missing archive on the remote host, and a local archive (it looks like a big hash string) that should be deleted.  Take it's advice and delete the local archive (substituting in the hash of the offending local archive in Unison's error message for `offending_local_archive`):
 ``` bash
-rm -r ~/.unison/<whatever the local archive name says>
+rm -r ~/.unison/offending_local_archive
 ```
 
 Once this is resolved, Unison can be started like normal.
@@ -47,19 +47,19 @@ Once this is resolved, Unison can be started like normal.
 `Unison` must be installed (see above).
 
 # Role Variables
-- `unison_project_name`: project _# The target name which Unison will use as a shorthand for this sync._
+- `unison_project_name`: some_project_name _# The target name which Unison will use as a shorthand for this sync._
 - `unison_local_mount_directory`: . _# The directory on the localhost with which to sync the remote directory defined by `unison_remote_mount_directory`._
 - `unison_remote_mount_directory`: /vagrant _# The directory to create and keep synced on the remote host.  Note that it will be modified when Unison is executed!_
 - `unison_local_config_directory`: ~/.unison _# Where on the local host is Unison expecting its configuration files to live?_
 - `unison_package_repository`: ppa:eugenesan/ppa _# The package repository with which to install Unison._
-- `unison_package_version`: 2.48.3-1~eugenesan~trusty1 _# The deb package version for Unison (this should be synchronzied pretty closely to the ansible host's version)_
+- `unison_package_version`: 2.48.3-1~eugenesan~trusty1 _# The deb package version for Unison (this should be synchronzied pretty closely to the Ansible host's version)_
 
 # Dependencies
 None
 
 # Example Playbook
     - hosts:
-        - some-host
+        - some-hosts-or-groups
       sudo: yes
       roles:
         - triplepoint.unison

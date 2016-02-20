@@ -1,6 +1,6 @@
 galaxy_info:
   author: Jonathan Hanson
-  description: Install and configure Unison file synchronization between the ansible host and the deploy target.
+  description: Install and configure Unison file synchronization between the Ansible host and the deploy target.
   license: MIT
   min_ansible_version: 1.9
   platforms:

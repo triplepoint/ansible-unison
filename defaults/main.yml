@@ -1,5 +1,5 @@
 ---
-unison_project_name: project
+unison_project_name: some_project_name
 unison_local_mount_directory: .
 unison_remote_mount_directory: /vagrant
 unison_local_config_directory: ~/.unison
