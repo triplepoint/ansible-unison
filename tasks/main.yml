@@ -2,14 +2,14 @@
 - name: Ensure the Unison PPA is available
   apt_repository: repo='{{ unison_package_repository }}'
 
-- name: Ensure the proper version of unison is installed
+- name: Ensure the proper version of Unison is installed
   apt: name=unison={{ unison_package_version }}
 
 - name: Ensure the sync target directory exists on the remote instance
   sudo: no
   file: path={{ unison_remote_mount_directory }} state=directory
 
-- name: Ensure the unison config directory exists on the localhost
+- name: Ensure the Unison config directory exists on the localhost
   sudo: no
   local_action: file path={{ unison_local_config_directory }} state=directory
 

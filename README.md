@@ -14,7 +14,7 @@ brew install unison
 ```
 
 ### Unison Versions
-It's said that if you don't have the same version of Unison on both ends of the synch, then _Bad Things_ can happen.  The Ansible variables `unison_package_repository` and `unison_package_version` define where to find Unison for the remote host, and care should be taken to make sure these match the version installed on the local host.  The installed version of Unison can be checked with:
+It's said that if you don't have the same version of Unison on both ends of the sync, then _Bad Things_ can happen.  The Ansible variables `unison_package_repository` and `unison_package_version` define where to find Unison for the remote host, and care should be taken to make sure these match the version installed on the local host.  The installed version of Unison can be checked with:
 ``` bash
 unison -version
 ```
@@ -49,7 +49,7 @@ Once this is resolved, Unison can be started like normal.
 # Role Variables
 - `unison_project_name`: project _# The target name which Unison will use as a shorthand for this sync._
 - `unison_local_mount_directory`: . _# The directory on the localhost with which to sync the remote directory defined by `unison_remote_mount_directory`._
-- `unison_remote_mount_directory`: /vagrant _# The directory to create and keep synched on the remote host.  Note that it will be modified when Unison is executed!_
+- `unison_remote_mount_directory`: /vagrant _# The directory to create and keep synced on the remote host.  Note that it will be modified when Unison is executed!_
 - `unison_local_config_directory`: ~/.unison _# Where on the local host is Unison expecting its configuration files to live?_
 - `unison_package_repository`: ppa:eugenesan/ppa _# The package repository with which to install Unison._
 - `unison_package_version`: 2.48.3-1~eugenesan~trusty1 _# The deb package version for Unison (this should be synchronzied pretty closely to the ansible host's version)_
