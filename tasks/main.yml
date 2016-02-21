@@ -6,8 +6,7 @@
   apt: name=unison={{ unison_package_version }}
 
 - name: Ensure the sync target directory exists on the remote instance
-  sudo: no
-  file: path={{ unison_remote_mount_directory }} state=directory
+  file: path={{ unison_remote_mount_directory }} state=directory owner={{ ansible_user }}
 
 - name: Ensure the Unison config directory exists on the localhost
   sudo: no
