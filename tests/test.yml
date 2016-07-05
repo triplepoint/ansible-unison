@@ -4,7 +4,7 @@
   vars:
     docker_inventory:
       - name: unison-test-host
-        image: "chrismeyers/centos6"
+        image: "ubuntu:14.04"
   roles:
     - { role: provision_docker, provision_docker_inventory: "{{ docker_inventory }}" }
 
