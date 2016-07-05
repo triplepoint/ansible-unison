@@ -31,6 +31,9 @@ install:
   - sudo pip install docker-py
   - ansible-galaxy install -r tests/requirements.yml -p tests/roles/vendor/
 
+before_script:
+  - ansible --version
+
 script:
   - cd tests && ansible-playbook tests/test.yml -i tests/inventory --syntax-check
   - cd tests && sudo ansible-playbook -i inventory -e "provision_docker_privileged=true" test.yml
