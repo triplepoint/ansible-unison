@@ -1,5 +1,52 @@
 ---
-- hosts: localhost
-  remote_user: root
+- name: Bring up docker containers
+  hosts: all
+  vars:
+    inventory:
+      - name: unison-test-host
+        image: "chrismeyers/centos6"
+  roles:
+    - { role: provision_docker, provision_docker_inventory: "{{ inventory }}" }
+
+- name: Install role under test
+  hosts: docker_containers
   roles:
     - ansible-unison
+
+# - name: Test Install Mongo
+#   hosts: primary:secondary
+#   vars:
+#     admin_user: "admin"
+#     admin_pass: "secret_squirrel"
+#     normal_user: "chris"
+#     normal_pass: "morocco_mole"
+#     db: "qq"
+#   pre_tasks:
+#        # TODO: Make this idempotent. Note: we can't use lininfile due to some dockerisms (mapped filesystem and file rename don't get along)
+#      - name: "Build hosts file"
+#        #lineinfile: dest=/etc/hosts regexp='.*{{ inventory_hostname }}$' line="{{ hostvars[inventory_hostname].ansible_default_ipv4.address }} {{inventory_hostname}}" state=present
+#        shell: 'echo "{{ hostvars[inventory_hostname].ansible_default_ipv4.address }} {{ inventory_hostname }}" >> /etc/hosts'
+#        when: hostvars[inventory_hostname].ansible_default_ipv4.address is defined
+
+#      - debug: msg="Running on host {{ inventory_hostname }}, {{ hostvars[inventory_hostname]['ansible_ssh_host'] }}"
+
+#   roles:
+#      - { role: install_mongod
+#         , install_mongod_admin_username: "{{ admin_user }}"
+#         , install_mongod_admin_password: "{{ admin_pass }}"
+#         , install_mongod_user_username: "{{ normal_user }}"
+#         , install_mongod_user_password: "{{ normal_pass }}"
+#         , install_mongod_user_database: "{{ db }}"
+#         , install_mongod_bind_ip: '0.0.0.0'
+#         , install_mongod_replset: tower
+#         , install_mongod_keyfile: '/etc/pki/mongo/keyfile'
+#         , tags: mongo }
+#   tasks:
+#     - name: Test connection to mongo instances.
+#       command: "echo hi"
+#     - name: Test connection as admin
+#       command: "echo hi"
+#     - name: Test connection as user
+#       command: "echo hi"
+#     - name: Test user access to db
+#       command: "echo hi"
