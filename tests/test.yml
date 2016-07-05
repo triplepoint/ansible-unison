@@ -11,4 +11,4 @@
 - name: Install role under test
   hosts: docker_containers
   roles:
-    - ansible-unison
+    - {role: ansible-unison, unison_project_name: "test_project"}

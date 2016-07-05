@@ -1,4 +1,7 @@
 ---
+- fail: msg="`unison_project_name` must be set"
+  when: unison_project_name == False
+
 - name: Ensure the Unison PPA is available
   apt_repository: repo='{{ unison_package_repository }}'
 
