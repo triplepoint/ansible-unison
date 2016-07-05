@@ -35,8 +35,9 @@ before_script:
   - ansible --version
 
 script:
-  - cd tests && ansible-playbook test.yml --syntax-check
-  - cd tests && sudo ansible-playbook test.yml -e "provision_docker_privileged=true"
+  - cd tests
+  - ansible-playbook test.yml --syntax-check
+  - sudo ansible-playbook test.yml -e "provision_docker_privileged=true"
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
