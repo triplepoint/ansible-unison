@@ -11,5 +11,6 @@ galaxy_info:
     - development
     - vagrant
     - synchronization
+    - unison
 
 dependencies: []

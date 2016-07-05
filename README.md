@@ -52,7 +52,7 @@ Once this is resolved, Unison can be started like normal.
 - `unison_remote_mount_directory`: /vagrant _# The directory to create and keep synced on the remote host.  Note that it will be modified when Unison is executed!_
 - `unison_local_config_directory`: ~/.unison _# Where on the local host is Unison expecting its configuration files to live?_
 - `unison_package_repository`: ppa:eugenesan/ppa _# The package repository with which to install Unison._
-- `unison_package_version`: 2.48.3-1~eugenesan~trusty1 _# The deb package version for Unison (this should be synchronzied pretty closely to the Ansible host's version)_
+- `unison_package_version`: 2.48.4-0~eugenesan~trusty1 _# The deb package version for Unison (this should be synchronzied pretty closely to the Ansible host's version)_
 
 # Dependencies
 None
