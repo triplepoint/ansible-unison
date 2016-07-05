@@ -26,7 +26,7 @@ install:
   - ansible-galaxy install -r tests/requirements.yml -p tests/roles/vendor/
 
 script:
-  - ansible-playbook tests/test.yml -i tests/inventory --syntax-check
+  - cd test && ansible-playbook tests/test.yml -i tests/inventory --syntax-check
   - cd test && sudo ansible-playbook -i inventory -e "provision_docker_privileged=true" test.yml
 
 notifications:
