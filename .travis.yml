@@ -32,10 +32,10 @@ install:
   - ansible-galaxy install -r tests/requirements.yml -p tests/roles/vendor/
 
 before_script:
+  - cd tests
   - ansible --version
 
 script:
-  - cd tests
   - ansible-playbook test.yml --syntax-check
   - sudo ansible-playbook test.yml -e "provision_docker_privileged=true"
 
