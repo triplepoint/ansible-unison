@@ -1,10 +1,13 @@
 sudo: required
 dist: trusty
+
 language: python
 python:
   - "2.7"
+
 services:
   - docker
+
 env:
   global:
     - PATH="/usr/bin:$PATH"
@@ -30,8 +33,8 @@ install:
   - ansible-galaxy install -r tests/requirements.yml -p tests/roles/vendor/
 
 script:
-  - cd test && ansible-playbook tests/test.yml -i tests/inventory --syntax-check
-  - cd test && sudo ansible-playbook -i inventory -e "provision_docker_privileged=true" test.yml
+  - cd tests && ansible-playbook tests/test.yml -i tests/inventory --syntax-check
+  - cd tests && sudo ansible-playbook -i inventory -e "provision_docker_privileged=true" test.yml
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
