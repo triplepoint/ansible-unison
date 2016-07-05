@@ -1,4 +1,6 @@
 # Unison
+[![Build Status](https://travis-ci.org/triplepoint/ansible-unison.svg?branch=master)](https://travis-ci.org/triplepoint/ansible-unison)
+
 ## Introduction
 Install and configure a [Unison](https://www.cis.upenn.edu/~bcpierce/unison/) file synchronization between the Ansible host and the deploy target.
 
