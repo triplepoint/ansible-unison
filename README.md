@@ -62,7 +62,7 @@ None
 # Example Playbook
     - hosts:
         - some-hosts-or-groups
-      sudo: yes
+      become: yes
       roles:
         - {role: triplepoint.unison, unison_project_name: "some_project_name"}
 

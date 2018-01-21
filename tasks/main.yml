@@ -3,28 +3,28 @@
   when: unison_project_name == False
 
 - name: Ensure the Unison PPA is available
-  apt_repository: repo='{{ unison_package_repository }}'
+  apt_repository: repo="{{ unison_package_repository }}"
 
 - name: Ensure the proper version of Unison is installed
-  apt: name=unison={{ unison_package_version }}
+  package: name="unison={{ unison_package_version }}" state=present
 
 - name: Ensure the sync target directory exists on the remote instance
-  file: path={{ unison_remote_mount_directory }} state=directory owner={{ ansible_user }}
+  file: path="{{ unison_remote_mount_directory }}" state=directory owner="{{ ansible_user }}"
 
 - name: Ensure the Unison config directory exists on the localhost
-  sudo: no
-  local_action: file path={{ unison_local_config_directory }} state=directory
+  become: no
+  local_action: file path="{{ unison_local_config_directory }}" state=directory
 
 - name: Get the SSH config file content from Vagrant
-  sudo: no
+  become: no
   local_action: command vagrant ssh-config
   register: unison_vagrant_ssh_config
   changed_when: false
 
 - name: Ensure the Unison SSH configuration file for this host is present
-  sudo: no
-  local_action: copy content="{{ unison_vagrant_ssh_config.stdout }}" dest={{ (unison_local_config_directory + '/' + unison_project_name + '_ssh.conf')  | expanduser | realpath }} backup=yes
+  become: no
+  local_action: copy content="{{ unison_vagrant_ssh_config.stdout }}" dest="{{ (unison_local_config_directory + '/' + unison_project_name + '_ssh.conf')  | expanduser | realpath }}" backup=yes
 
 - name: Ensure the Unison config file is present on the local host
-  sudo: no
-  local_action: template src=unison_profile.prf.j2 dest={{ (unison_local_config_directory + '/' + unison_project_name + '.prf')  | expanduser | realpath }} backup=yes
+  become: no
+  local_action: template src=unison_profile.prf.j2 dest="{{ (unison_local_config_directory + '/' + unison_project_name + '.prf')  | expanduser | realpath }}" backup=yes
