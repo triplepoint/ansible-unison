@@ -2,7 +2,7 @@ galaxy_info:
   author: Jonathan Hanson
   description: Install and configure Unison file synchronization between the Ansible host and the deploy target.
   license: MIT
-  min_ansible_version: 2.0
+  min_ansible_version: 2.4
   platforms:
   - name: Ubuntu
     versions:
