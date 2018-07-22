@@ -49,7 +49,7 @@ Once this is resolved, Unison can be started like normal.
 `Unison` must be installed (see above).
 
 # Role Variables
-- `unison_project_name`: False _# Must be explicitly overridden.  The target name which Unison will use as a shorthand for this sync._
+- `unison_project_name`: false _# Must be explicitly overridden.  The target name which Unison will use as a shorthand for this sync._
 - `unison_local_mount_directory`: . _# The directory on the localhost with which to sync the remote directory defined by `unison_remote_mount_directory`._
 - `unison_remote_mount_directory`: /vagrant _# The directory to create and keep synced on the remote host.  Note that it will be modified when Unison is executed!_
 - `unison_local_config_directory`: ~/.unison _# Where on the local host is Unison expecting its configuration files to live?_
@@ -62,7 +62,7 @@ None
 # Example Playbook
     - hosts:
         - some-hosts-or-groups
-      become: yes
+      become: true
       roles:
         - {role: triplepoint.unison, unison_project_name: "some_project_name"}
 
